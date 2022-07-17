@@ -50,30 +50,36 @@ public class MainGUI extends JFrame {
         G.add(konumSeçRadioButton);
 
 
-        başlatF6Button.addActionListener(e -> {
-            Robot robot = null;
+        başlatF6Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Robot robot = null;
+
+                
 
 
-            if (konumSeçRadioButton.isSelected()) {
-                try {
-                    robot = new Robot();
-                    robot.mouseMove(Integer.parseInt(textField_xCoord.getText()), Integer.parseInt(textField_yCoord.getText()));
+                if (konumSeçRadioButton.isSelected()) {
+                    try {
+                        robot = new Robot();
+                        robot.mouseMove(Integer.parseInt(textField_xCoord.getText()), Integer.parseInt(textField_yCoord.getText()));
 
-                } catch (AWTException ex) {
-                    throw new RuntimeException(ex);
+                    } catch (AWTException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
-            }
-            if (comboBox_buton.getSelectedIndex() == 0) {
-                leftClick();
-                System.out.println("left click");
-            } else if (comboBox_buton.getSelectedIndex() == 1) {
-                rightClick();
-                System.out.println("sağ click");
-            } else {
-                System.out.println("*******");
-            }
+                if (comboBox_buton.getSelectedIndex() == 0) {
+
+                    MainGUI.this.leftClick();
+                    System.out.println("left click");
+                } else if (comboBox_buton.getSelectedIndex() == 1) {
+                    MainGUI.this.rightClick();
+                    System.out.println("sağ click");
+                } else {
+                    System.out.println("*******");
+                }
 
 
+            }
         });
 
 
