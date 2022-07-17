@@ -41,6 +41,7 @@ public class MainGUI extends JFrame {
         AutoClick autoClick = new AutoClick();
         lbl_ms_slide.setText(String.valueOf(slider1.getValue()) + " Ms.");
 
+
         textField_clickCount.setText("10");
 
 
@@ -50,22 +51,31 @@ public class MainGUI extends JFrame {
 
 
         başlatF6Button.addActionListener(e -> {
+            Robot robot = null;
+
+
+            if (konumSeçRadioButton.isSelected()) {
+                try {
+                    robot = new Robot();
+                    robot.mouseMove(Integer.parseInt(textField_xCoord.getText()), Integer.parseInt(textField_yCoord.getText()));
+
+                } catch (AWTException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             if (comboBox_buton.getSelectedIndex() == 0) {
                 leftClick();
+                System.out.println("left click");
             } else if (comboBox_buton.getSelectedIndex() == 1) {
                 rightClick();
-            } else if (comboBox_buton.getSelectedIndex() == 0 && comboBox_clickType.getSelectedIndex() == 1) {
-                leftDoubleClick();
-            }else if (comboBox_buton.getSelectedIndex() == 1 && comboBox_clickType.getSelectedIndex() == 1){
-                rightDoubleClick();
-            }
-            else {
+                System.out.println("sağ click");
+            } else {
                 System.out.println("*******");
             }
-        });
-        durdurF6Button.addActionListener(e -> {
+
 
         });
+
 
         slider1.addChangeListener(new ChangeListener() {
             @Override
@@ -81,16 +91,21 @@ public class MainGUI extends JFrame {
                 System.out.println(comboBox_buton.getSelectedIndex());
             }
         });
-        konumSeçRadioButton.addActionListener(new ActionListener() {
+
+        pnl_bottom.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 3) {
+                    System.out.println("triple-click");
+                } else if (evt.getClickCount() == 2) {
+                    System.out.println("double-click");
+                }
+            }
+        });
+        durdurF6Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Seçildi");
-                try {
-                    Robot robot = new Robot();
-                    robot.mouseMove(Integer.parseInt(textField_xCoord.getText()), Integer.parseInt(textField_yCoord.getText()));
-                } catch (AWTException ex) {
-                    throw new RuntimeException(ex);
-                }
+
 
 
             }
@@ -163,6 +178,11 @@ public class MainGUI extends JFrame {
         for (int i = 0; i < clicks; i++) {
             autoClick.ClickDoubleMouse(InputEvent.BUTTON3_DOWN_MASK);
         }
+    }
+
+    public void benDurduranaKadar() {
+
+
     }
 
 

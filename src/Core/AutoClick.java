@@ -5,8 +5,8 @@ import java.awt.*;
 public class AutoClick {
     private Robot robot;
     private int delay;
-
     public AutoClick() {
+
         try {
             robot = new Robot();
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class AutoClick {
             robot.delay(1);
             robot.mouseRelease(button);
             robot.delay(1);
-            robot.delay(15);
+            robot.delay(1000);
         } catch (Exception e) {
             System.out.println(e);
         }
