@@ -9,7 +9,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MainGUI extends JFrame {
+public class MainGUI extends JFrame implements Runnable {
     private JPanel wrapper;
     private JPanel pnl_top;
     private JPanel pnl_bottom;
@@ -54,8 +54,8 @@ public class MainGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Robot robot = null;
+                Thread t1 = new Thread();
 
-                
 
 
                 if (konumSeçRadioButton.isSelected()) {
@@ -70,6 +70,9 @@ public class MainGUI extends JFrame {
                 if (comboBox_buton.getSelectedIndex() == 0) {
 
                     MainGUI.this.leftClick();
+                    t1.start();
+                    t1.isAlive();
+                    System.out.println("t1 " + t1.getState());
                     System.out.println("left click");
                 } else if (comboBox_buton.getSelectedIndex() == 1) {
                     MainGUI.this.rightClick();
@@ -111,7 +114,6 @@ public class MainGUI extends JFrame {
         durdurF6Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
 
 
             }
@@ -192,4 +194,9 @@ public class MainGUI extends JFrame {
     }
 
 
+    @Override
+    public void run() {
+        leftClick();
+
+    }
 }
