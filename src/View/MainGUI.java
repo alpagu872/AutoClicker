@@ -23,7 +23,6 @@ public class MainGUI extends JFrame implements Runnable {
     private JTextField textField_xCoord;
     private JTextField textField_yCoord;
     private JSlider slider1;
-    private JRadioButton benDurduranaKadarRadioButton;
     private JTextField textField_clickCount;
     private JLabel lbl_ms_slide;
     private JLabel lbl_yCoord;
@@ -40,6 +39,7 @@ public class MainGUI extends JFrame implements Runnable {
         setVisible(true);
         AutoClick autoClick = new AutoClick();
         lbl_ms_slide.setText(String.valueOf(slider1.getValue()) + " Ms.");
+        mevcutKonumRadioButton.setSelected(true);
 
 
         textField_clickCount.setText("10");
@@ -49,41 +49,34 @@ public class MainGUI extends JFrame implements Runnable {
         G.add(mevcutKonumRadioButton);
         G.add(konumSeçRadioButton);
 
+        ActionListener al = e -> {
 
-        başlatF6Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Robot robot = null;
-                Thread t1 = new Thread();
+            Robot robot = null;
 
+            if (konumSeçRadioButton.isSelected()) {
+                try {
+                    robot = new Robot();
+                    robot.mouseMove(Integer.parseInt(textField_xCoord.getText()), Integer.parseInt(textField_yCoord.getText()));
 
-
-                if (konumSeçRadioButton.isSelected()) {
-                    try {
-                        robot = new Robot();
-                        robot.mouseMove(Integer.parseInt(textField_xCoord.getText()), Integer.parseInt(textField_yCoord.getText()));
-
-                    } catch (AWTException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                } catch (AWTException ex) {
+                    throw new RuntimeException(ex);
                 }
-                if (comboBox_buton.getSelectedIndex() == 0) {
-
-                    MainGUI.this.leftClick();
-                    t1.start();
-                    t1.isAlive();
-                    System.out.println("t1 " + t1.getState());
-                    System.out.println("left click");
-                } else if (comboBox_buton.getSelectedIndex() == 1) {
-                    MainGUI.this.rightClick();
-                    System.out.println("sağ click");
-                } else {
-                    System.out.println("*******");
-                }
-
-
             }
-        });
+            if (comboBox_buton.getSelectedIndex() == 0) {
+
+                MainGUI.this.leftClick();
+                System.out.println("left click");
+            } else if (comboBox_buton.getSelectedIndex() == 1) {
+                MainGUI.this.rightClick();
+                System.out.println("sağ click");
+            } else {
+                System.out.println("*******");
+            }
+
+
+        };
+
+        başlatF6Button.addActionListener(al);
 
 
         slider1.addChangeListener(new ChangeListener() {
@@ -111,13 +104,7 @@ public class MainGUI extends JFrame implements Runnable {
                 }
             }
         });
-        durdurF6Button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-
-            }
-        });
     }
 
     public void leftClick() {
